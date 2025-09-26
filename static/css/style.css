@@ -1,0 +1,519 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(248, 250, 252);
+  }
+  
+  .header {
+   width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    left: 0;
+    align-items: center; 
+    text-align: center;
+    color: #0e0d0d;
+  }
+ 
+  .header_video{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left:0;
+    object-fit: cover;
+  }
+  .nav{
+    width: 100%;
+    background-color: #f8f7f741;
+    display: flex;
+    justify-content:end;
+    padding: 0 10%;
+    align-items: center;
+  }
+  .nav-menu ul{
+    display: flex;
+    list-style:none;
+  }
+  .nav-menu ul a{
+    text-decoration: none;
+    color: #000;
+    text-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+    font-size: 18px;
+    margin: 0 15px;
+    transition: color .4s;
+  }
+  .nav-menu ul a:hover{
+    color: bisque;
+  }
+
+ 
+  h1 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+  
+  .about-button {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    line-height: 1.2;
+    height: 40px;
+  }
+  
+  .about-button:hover {
+    background-color: #555;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  footer {
+    background-color:rgb(4, 169, 136);
+    color: #fff;
+    padding: 3px;
+    text-align: center;
+  }
+
+  header {
+    background-color:rgb(4, 169, 136);
+    color:black;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* Non-home page styles */
+  .non-home .nav {
+    background-color: #f5f5f5 !important;
+  }
+
+  .non-home header {
+    padding: 10px;
+  }
+
+  .non-home h1 {
+    font-size: 2.5rem;
+  }
+
+  .non-home h2 {
+    font-size: 1.5rem;
+  }
+
+  .destination{
+    top: 5px;
+    text-align: center;
+    display:grid ;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    padding: 30px 50px;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+  }
+  .destination-image{
+    width: 90%;
+    height: 250px;
+    object-fit: cover;
+    padding-top: 30px;
+    cursor:pointer; 
+    border-radius: 30px;
+}
+.destination-image:hover{
+    transform: scale(1.04);
+}
+  .destination-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .destination-description {
+    flex: 1;
+    margin-right: 2rem;
+    color:black;
+  }
+  
+  .destination-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    
+  }
+  
+  .destination-meta {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 1rem;
+  }
+  
+  .destination-activities {
+    flex: 1;
+  }
+  
+  .activity-item {
+    margin-bottom: 1rem;
+  }
+  
+  .activity-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .activity-description {
+    font-size: 1.2rem;
+  }
+
+  .map {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+  }
+  
+  .map span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+  }
+
+  * {
+    box-sizing: border-box;
+}
+  
+  .parallax1{
+    background-image: url("../images/destination1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position:relative;
+    opacity: 0.65;
+  }
+.parallax2{
+    background-image: url("../images/destination2.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+.parallax3{
+    background-image: url("../images/destination3_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+  .parallax4{
+    background-image: url("../images/destination4_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+  .parallax5{
+    background-image: url("../images/destination5_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+  .parallax6{
+    background-image: url("../images/destination6_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+  .parallax7{
+    background-image: url("../images/destination10_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+  .parallax8{
+    background-image: url("../images/destination11_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+  .parallax9{
+    background-image: url("../images/destination12_1.jpg");
+    min-height: 700px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    opacity: 0.65;
+  }
+.mappara{
+    color: #777;
+    background-color:aliceblue;
+    text-align:center;
+    padding:30px 30px;
+    text-align: justify;
+  }
+
+  /* Form styles for login, register, booking */
+  .form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .form-group button {
+    background-color: rgb(4, 169, 136);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .form-group button:hover {
+    background-color: #0056b3;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .table th {
+    background-color: rgb(4, 169, 136);
+    color: white;
+  }
+
+  .alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  /* Sticky footer for non-home pages like login/register */
+  .non-home {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .non-home .form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .non-home footer {
+    margin-top: auto;
+  }
+
+  /* Sticky nav for maps: starts below header, sticks to top on scroll */
+  .maps .nav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #f5f5f5 !important;
+  }
+
+  .maps .parallax1 {
+    padding-top: 0;
+  }
+
+  /* Gallery styles */
+  .gallery {
+    top: 5px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 30px 50px;
+    grid-column-gap: 30px;
+    flex: 1;
+  }
+
+  .gallery-image img {
+    width: 90%;
+    height: 250px;
+    object-fit: cover;
+    padding-top: 30px;
+    cursor: pointer;
+    border-radius: 30px;
+  }
+
+  .gallery-image img:hover {
+    transform: scale(1.04);
+  }
+
+  .gallery-image h4 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  /* Image scroller for destination detail */
+  .image-scroller {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin: 20px 0;
+  }
+
+  .image-scroller img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  /* Carousel image sizing for destination details */
+  .carousel {
+    height: 400px;
+  }
+  .carousel-inner,
+  .carousel-item,
+  .carousel-item img {
+    height: 400px;
+  }
+  .carousel-item img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* Ensure destination items display fully */
+  .destination-item {
+    text-align: center;
+    padding: 10px;
+    break-inside: avoid;
+  }
+
+  /* Bookings grid for My Bookings page */
+  .bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .booking-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .booking-card .card-body {
+    padding: 20px;
+  }
+
+  .booking-card .card-title {
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .booking-card .card-text {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  /* Adjust destination grid for better display on smaller viewports */
+  .destination {
+    padding: 20px 20px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .destination {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      padding: 10px;
+    }
+  }

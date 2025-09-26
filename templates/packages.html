@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escape and Explore - Destinations</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="non-home">
+  <header>
+    <h1>Escape and Explore - Destinations</h1>
+  </header>
+  <div class="nav">
+    <div class="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="{{ url_for('packages') }}">Destinations</a></li>
+        <li><a href="{{ url_for('maps') }}">Maps</a></li>
+        {% if not is_authenticated %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% else %}
+        <li><a href="{{ url_for('mybookings') }}">My Bookings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <div class="destination">
+      {% for package in packages %}
+      <div class="destination-item">
+        <img src="{{ url_for('static', filename='images/' + package.image) }}" alt="{{ package.name }}" class="destination-image">
+        <h2 class="destination-title">{{ package.name }}</h2>
+        <p class="destination-description">{{ package.description.split('\n')[0] }}</p>
+        <a href="{{ url_for('destination_detail', package_id=package.id) }}" class="cta-button">Learn More</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
+  </footer>
+</body>
+</html>

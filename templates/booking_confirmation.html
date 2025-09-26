@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escape and Explore - Booking Confirmation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="non-home">
+  <div class="nav">
+    <div class="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('packages') }}">Destinations</a></li>
+        <li><a href="{{ url_for('maps') }}">Maps</a></li>
+        <li><a href="{{ url_for('mybookings') }}">My Bookings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card mt-5">
+          <div class="card-header bg-success text-white text-center">
+            <h2>Booking Confirmed!</h2>
+          </div>
+          <div class="card-body">
+            <h4>Thank you for your booking, {{ booking.name }}!</h4>
+            <p><strong>Package:</strong> {{ package.name }}</p>
+            <p><strong>Email:</strong> {{ booking.email }}</p>
+            <p><strong>Phone:</strong> {{ booking.phone }}</p>
+            <p><strong>Number of Travelers:</strong> {{ booking.travelers }}</p>
+            <p><strong>Travel Date:</strong> {{ booking.date }}</p>
+            <p>Your booking has been successfully created. You can view or manage it in My Bookings.</p>
+            <div class="text-center">
+              <a href="{{ url_for('mybookings') }}" class="btn btn-primary me-2">View My Bookings</a>
+              <a href="{{ url_for('packages') }}" class="btn btn-secondary">Explore More Packages</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-5">
+    <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escape and Explore - Destination Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="non-home">
+  <header>
+    <h1>Escape and Explore - Destination Details</h1>
+  </header>
+
+  <div class="nav">
+    <div class="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="{{ url_for('packages') }}">Destinations</a></li>
+        <li><a href="{{ url_for('maps') }}">Maps</a></li>
+        {% if not is_authenticated %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% else %}
+        <li><a href="{{ url_for('mybookings') }}">My Bookings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ url_for('static', filename='images/' + package.image) }}" class="d-block w-100" alt="{{ package.name }}">
+        </div>
+        {% if package.name == 'GOA' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/goa1.jpg') }}" class="d-block w-100" alt="Calangute Beach">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/goa2.jpeg') }}" class="d-block w-100" alt="Old Goa">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/goa3.jpeg') }}" class="d-block w-100" alt="Dudhsagar Falls">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/goa4.jpeg') }}" class="d-block w-100" alt="Panaji">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/goa5.jpeg') }}" class="d-block w-100" alt="Anjuna Flea Market">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/goa6.jpeg') }}" class="d-block w-100" alt="Fort Aguada">
+        </div>
+        {% elif package.name == 'MANALI' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/manali1.jpeg') }}" class="d-block w-100" alt="Rohtang Pass">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/manali2.jpeg') }}" class="d-block w-100" alt="Solang Valley">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/manali3.jpeg') }}" class="d-block w-100" alt="Hadimba Devi Temple">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/manali4.jpeg') }}" class="d-block w-100" alt="Old Manali">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/manali5.jpeg') }}" class="d-block w-100" alt="Manikaran">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/manali6.jpeg') }}" class="d-block w-100" alt="Naggar Castle">
+        </div>
+        {% elif package.name == 'OOTY' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty1.jpeg') }}" class="d-block w-100" alt="Ooty Lake">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty2.jpeg') }}" class="d-block w-100" alt="Botanical Gardens">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty3.jpeg') }}" class="d-block w-100" alt="Doddabetta Peak">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty4.jpeg') }}" class="d-block w-100" alt="Tea Gardens">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty5.jpeg') }}" class="d-block w-100" alt="Rose Garden">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty6.jpeg') }}" class="d-block w-100" alt="Pykara Falls">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ooty7.jpeg') }}" class="d-block w-100" alt="Nilgiri Mountain Railway">
+        </div>
+        {% elif package.name == 'KERALA' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala1.jpeg') }}" class="d-block w-100" alt="Alleppey Backwaters">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala2.jpg') }}" class="d-block w-100" alt="Munnar Hill Station">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala3.jpg') }}" class="d-block w-100" alt="Periyar Wildlife Sanctuary">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala4.jpeg') }}" class="d-block w-100" alt="Kovalam Beach">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala5.jpeg') }}" class="d-block w-100" alt="Fort Kochi">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala6.jpeg') }}" class="d-block w-100" alt="Ayurveda Treatment">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/kerala7.jpeg') }}" class="d-block w-100" alt="Houseboat Cruise">
+        </div>
+        {% elif package.name == 'JAIPUR' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur1.jpeg') }}" class="d-block w-100" alt="Amber Fort">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur2.jpeg') }}" class="d-block w-100" alt="City Palace">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur3.jpeg') }}" class="d-block w-100" alt="Hawa Mahal">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur4.jpeg') }}" class="d-block w-100" alt="Jantar Mantar">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur5.jpeg') }}" class="d-block w-100" alt="Jal Mahal">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur6.jpeg') }}" class="d-block w-100" alt="Elephant Ride">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur7.jpeg') }}" class="d-block w-100" alt="Rajasthani Crafts">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/jaipur8.jpeg') }}" class="d-block w-100" alt="Pink City Streets">
+        </div>
+        {% elif package.name == 'LADAKH' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ladakh1.jpeg') }}" class="d-block w-100" alt="Pangong Lake">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ladakh2.jpeg') }}" class="d-block w-100" alt="Nubra Valley">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ladakh3.jpeg') }}" class="d-block w-100" alt="Leh Palace">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ladakh4.jpeg') }}" class="d-block w-100" alt="Magnetic Hill">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ladakh5.jpeg') }}" class="d-block w-100" alt="Thiksey Monastery">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/ladakh6.jpeg') }}" class="d-block w-100" alt="Motorcycle Tour">
+        </div>
+        {% elif package.name == 'ANDAMAN' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/andaman1.jpg') }}" class="d-block w-100" alt="Radhanagar Beach">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/andaman2.jpg') }}" class="d-block w-100" alt="Cellular Jail">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/andaman3.jpg') }}" class="d-block w-100" alt="Ross Island">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/andaman4.jpg') }}" class="d-block w-100" alt="Elephant Beach">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/andaman5.jpg') }}" class="d-block w-100" alt="Baratang Island">
+        </div>
+        {% elif package.name == 'LAKSHADWEEP' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/lakshadweep1.jpg') }}" class="d-block w-100" alt="Kavaratti Island">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/lakshadweep2.jpg') }}" class="d-block w-100" alt="Minicoy Island">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/lakshadweep3.jpg') }}" class="d-block w-100" alt="Agatti Island">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/lakshadweep4.jpg') }}" class="d-block w-100" alt="Bangaram Island">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/lakshadweep5.jpg') }}" class="d-block w-100" alt="Kadmat Island">
+        </div>
+        {% elif package.name == 'COORG' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/coorg1.jpg') }}" class="d-block w-100" alt="Abbey Falls">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/coorg2.jpg') }}" class="d-block w-100" alt="Raja's Seat">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/coorg3.jpg') }}" class="d-block w-100" alt="Nisargadhama">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/coorg4.jpg') }}" class="d-block w-100" alt="Iruppu Falls">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/coorg5.jpg') }}" class="d-block w-100" alt="Dubare Elephant Camp">
+        </div>
+        {% elif package.name == 'NEPAL' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal1.jpeg') }}" class="d-block w-100" alt="Kathmandu">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal2.jpeg') }}" class="d-block w-100" alt="Pokhara">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal3.jpeg') }}" class="d-block w-100" alt="Chitwan National Park">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal4.jpeg') }}" class="d-block w-100" alt="Bhaktapur">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal5.jpeg') }}" class="d-block w-100" alt="Lumbini">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal6.jpeg') }}" class="d-block w-100" alt="Everest Base Camp">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/nepal7.jpeg') }}" class="d-block w-100" alt="Rafting">
+        </div>
+        {% elif package.name == 'BHUTAN' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan1.jpeg') }}" class="d-block w-100" alt="Paro Taktsang">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan2.jpeg') }}" class="d-block w-100" alt="Punakha Dzong">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan3.jpeg') }}" class="d-block w-100" alt="Thimphu">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan4.jpeg') }}" class="d-block w-100" alt="Wangdue Phodrang">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan5.jpeg') }}" class="d-block w-100" alt="Trongsa Dzong">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan6.jpeg') }}" class="d-block w-100" alt="Cultural Tour">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/bhutan7.jpeg') }}" class="d-block w-100" alt="Hiking">
+        </div>
+        {% elif package.name == 'AMRITSAR' %}
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar1.jpeg') }}" class="d-block w-100" alt="Golden Temple">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar2.jpeg') }}" class="d-block w-100" alt="Jallianwala Bagh">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar3.jpeg') }}" class="d-block w-100" alt="Wagah Border">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar4.jpeg') }}" class="d-block w-100" alt="Partition Museum">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar5.jpeg') }}" class="d-block w-100" alt="Durgiana Temple">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar6.jpeg') }}" class="d-block w-100" alt="Langar">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='images/amristar7.jpeg') }}" class="d-block w-100" alt="Beating Retreat">
+        </div>
+        {% endif %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <div class="destination-info">
+      <div class="destination-description">
+        <h2 class="destination-title">{{ package.name }}</h2>
+        <p class="destination-meta">Location: {{ package.location }}</p>
+        <p class="destination-meta">Duration: {{ package.duration }}</p>
+        <p class="destination-meta">Best Time to Visit: {{ package.best_time }}</p>
+        {% set desc_parts = package.description.split('\n\n') %}
+        {% for part in desc_parts %}
+          {% if ':' in part %}
+            {% set title, desc = part.split(':', 1) %}
+            <p><strong>{{ title.strip() }}:</strong> {{ desc.strip().replace('\n', ' ') }}</p>
+          {% else %}
+            <p>{{ part.strip().replace('\n', ' ') }}</p>
+          {% endif %}
+        {% endfor %}      
+      </div>
+      <div class="destination-activities">
+        {% if package.activities %}
+        {% for activity in package.activities.split('||') %}
+        <div class="activity-item">
+          <h3 class="activity-title">{{ activity.split(':')[0] }}</h3>
+          <p class="activity-description">{{ activity.split(':')[1] if ':' in activity else activity }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    {% if is_authenticated %}
+    <a href="{{ url_for('booking', package_id=package.id) }}" class="about-button">Book Now</a>
+    {% else %}
+    <button class="btn btn-primary about-button" onclick="window.location.href='{{ url_for('login') }}'">Login to Book</button>
+    {% endif %}
+    <a href="{{ url_for('gallery', package_id=package.id) }}" class="about-button">Gallery</a>
+    <a href="{{ url_for('packages') }}" class="about-button">Back to Destinations</a>
+  </div>
+  <footer>
+    <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
+  </footer>
+</body>
+</html>

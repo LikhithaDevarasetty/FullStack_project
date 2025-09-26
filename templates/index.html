@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escape and Explore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body> 
+   
+  <div class="header">
+   <div class="nav" style="top: 0px;">
+      <div class="nav-menu">
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="{{ url_for('packages') }}">Destinations</a></li>
+          <li><a href="{{ url_for('maps') }}">Maps</a></li>
+        {% if not is_authenticated %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% else %}
+        <li><a href="{{ url_for('mybookings') }}">My Bookings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+    <video autoplay muted loop class="header_video">
+      <source src="{{ url_for('static', filename='images/headervideo.mp4') }}">
+    </video>
+
+   
+    <h1 style="margin-top: 30vh;">Escape and Explore</h1>
+    
+   <a href="#about" class="about-button">Start Your Adventure</a>
+  </div>
+  
+
+  <div class="container" id="about">
+    <h2>About Escape and Explore</h2>
+    <p>"Escape and Explore" is a travel-themed website dedicated to inspiring and providing valuable information to avid travelers. Whether you're a seasoned globetrotter or someone looking to embark on their first adventure, "Escape and Explore" aims to be your go-to resource for travel inspiration, tips, and destination recommendations.</p>
+    <p>Escape and Explore is your gateway to incredible travel experiences. Discover the world's most captivating destinations, immerse yourself in vibrant cultures, and create unforgettable memories. Whether you're a seasoned traveler or a first-time adventurer, we've got you covered.</p>
+    
+    <h2>Why Choose Us?</h2>
+    <p>- Extensive collection of handpicked destinations</p>
+    <p>- Detailed travel guides and itineraries</p>
+    <p>- Insider tips from experienced globetrotters</p>
+    <p>- User-generated content to inspire your wanderlust</p>
+    
+    <h2>Start Your Journey Now</h2>
+    <p>Ready to embark on your next adventure? Click the button below and let's begin exploring the world together.</p>
+    
+    <a href="{{ url_for('packages') }}" class="about-button">Start Exploring</a>
+  </div>
+  <footer>
+    <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escape and Explore - Maps</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="non-home maps">
+  <header>
+    <h1>Escape and Explore - Maps</h1>
+  </header>
+  <div class="nav">
+    <div class="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="{{ url_for('packages') }}">Destinations</a></li>
+        <li><a href="{{ url_for('maps') }}">Maps</a></li>
+        {% if not is_authenticated %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% else %}
+        <li><a href="{{ url_for('mybookings') }}">My Bookings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="parallax1">
+    <div class="map">
+     <span class="border">GOA</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>GOA</b></td>
+      </tr>
+      <tr>
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>
+      <tr>
+        <td>Goa<br>West India<br>India</td>
+      </tr>
+    </table>
+    <center>
+        <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d492479.6002716127!2d73.72649963626586!3d15.349553561107554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfba106336b741%3A0xeaf887ff62f34092!2sGoa!5e0!3m2!1sen!2sin!4v1687020939092!5m2!1sen!2sin"
+         width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+         referrerpolicy="no-referrer-when-downgrade">
+        </iframe></center>
+   </div>    
+
+   <div class="parallax2">
+    <div class="map">
+     <span class="border">MANALI</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>MANALI</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Manali<br>Himachal Pradesh<br>India</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26997.532381773144!2d77.16961019388917!3d32.23947084279168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39048708163fd03f%3A0x8129a80ebe5076cd!2sManali%2C%20Himachal%20Pradesh!5e0!3m2!1sen!2sin!4v1687022100399!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </center>
+   </div>
+
+   <div class="parallax3">
+    <div class="map">
+     <span class="border">OOTY</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>OOTY</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Ooty<br>TamilNadu<br>India</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62575.051161588744!2d76.65840200211633!3d11.411850524340798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8bd84b5f3d78d%3A0x179bdb14c93e3f42!2sOoty%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1687022410175!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </center>
+   </div>
+
+   <div class="parallax4">
+    <div class="map">
+     <span class="border">KERALA</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>KERALA</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Kerala<br>SouthIndia<br>India</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4016727.0458129314!2d73.4959074328516!3d10.533315450640005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0812ffd49cf55b%3A0x64bd90fbed387c99!2sKerala!5e0!3m2!1sen!2sin!4v1687022573081!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </center>
+   </div>
+
+   <div class="parallax5">
+    <div class="map">
+     <span class="border">JAIPUR</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>JAIPUR</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Jaipur<br>Rajasthan<br>India</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227749.05321195384!2d75.62574555215417!3d26.885115144105413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1687022715475!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </center>
+   </div>
+
+   <div class="parallax6">
+    <div class="map">
+     <span class="border">LADAKH</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>LADAKH</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Ladakh<br>Northern and Eastern Kashmir region<br>India</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3388014.3070468274!2d74.80350671495871!3d33.976920833556015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38fd86bce37d7139%3A0xc6c2990fdad28ac7!2sLadakh!5e0!3m2!1sen!2sin!4v1687022932554!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </center>
+   </div>
+
+   <div class="parallax7">
+    <div class="map">
+     <span class="border">NEPAL</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>NEPAL</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Nepal<br>South Asia<br>Nepal</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593955.613923965!2d84.13015055000002!3d28.397455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995e8c77d2e68cf%3A0x34a29abcd0cc86de!2sNepal!5e0!3m2!1sen!2sin!4v1687023551387!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </center>
+   </div>
+
+   <div class="parallax8">
+    <div class="map">
+     <span class="border">BHUTAN</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>BHUTAN</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Bhutan<br>South Asia<br>Bhutan</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1812393.7806747346!2d90.43585295!3d27.4745015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375b92a573c595cf%3A0xbb0cac652836bcda!2sBhutan!5e0!3m2!1sen!2sin!4v1687023722816!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </center>
+   </div>
+
+   <div class="parallax9">
+    <div class="map">
+     <span class="border">AMRITSAR</span>
+    </div>
+   </div>
+   <div class="mappara">
+    <table cellpadding="20" style="text-align: center;" align="center">
+      <tr>
+        <td><b>AMRITSAR</b></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td><img src="{{ url_for('static', filename='images/navi.webp') }}" width="80" height="80" style="border-radius: 100px;"></td>
+      </tr>  
+      <tr>
+        <td>Amristar<br>Punjab<br>India</td>
+      </tr>
+    </table>
+    <center>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108704.35790127801!2d74.8701203!3d31.633544149999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391964aa569e7355%3A0xeea2605bee84ef7d!2sAmritsar%2C%20Punjab!5e0!3m2!1sen!2sin!4v1687024009000!5m2!1sen!2sin" 
+        width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </center>
+   </div>
+
+   <footer>
+    <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
+  </footer>
+</body>
+</html>
