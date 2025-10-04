@@ -56,6 +56,14 @@
         <input type="date" id="date" name="date" required>
       </div>
       <div class="form-group">
+        <label for="bus_id">Select Bus:</label>
+        <select id="bus_id" name="bus_id" required>
+          {% for bus in buses %}
+            <option value="{{ bus.id }}">{{ bus.name }} - {{ bus.departure_time }} - ₹{{ bus.price }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
         <button type="submit">Book Now</button>
       </div>
     </form>

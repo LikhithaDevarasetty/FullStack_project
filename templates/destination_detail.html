@@ -5,6 +5,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    /* caption for carousel images */
+    .carousel-image-caption {
+      margin-top: 12px;
+      padding: 12px 18px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 8px;
+      color: #111;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body class="non-home">
   <header>
@@ -27,6 +38,7 @@
         {% endif %}
       </ul>
     </div>
+  <div id="carousel-caption" class="carousel-image-caption" aria-live="polite"></div>
   </div>
 
   <div class="container">
@@ -292,24 +304,24 @@
         <p class="destination-meta">Location: {{ package.location }}</p>
         <p class="destination-meta">Duration: {{ package.duration }}</p>
         <p class="destination-meta">Best Time to Visit: {{ package.best_time }}</p>
-        {% set desc_parts = package.description.split('\n\n') %}
-        {% for part in desc_parts %}
-          {% if ':' in part %}
-            {% set title, desc = part.split(':', 1) %}
-            <p><strong>{{ title.strip() }}:</strong> {{ desc.strip().replace('\n', ' ') }}</p>
-          {% else %}
-            <p>{{ part.strip().replace('\n', ' ') }}</p>
-          {% endif %}
-        {% endfor %}      
+        {# Render description as paragraphs, preserving blank-line paragraphing and internal line breaks #}
+        {% if package.description %}
+          {% for para in package.description.split('\n\n') %}
+            <p>{{ para.strip().replace('\n', '<br>')|safe }}</p>
+          {% endfor %}
+        {% endif %}
       </div>
       <div class="destination-activities">
         {% if package.activities %}
+        <h3>Activities</h3>
+        <ul>
         {% for activity in package.activities.split('||') %}
-        <div class="activity-item">
-          <h3 class="activity-title">{{ activity.split(':')[0] }}</h3>
-          <p class="activity-description">{{ activity.split(':')[1] if ':' in activity else activity }}</p>
-        </div>
+          {% set parts = activity.split(':', 1) %}
+          <li>
+            <strong>{{ parts[0].strip() }}</strong>{% if parts|length > 1 %}: {{ parts[1].strip() }}{% endif %}
+          </li>
         {% endfor %}
+        </ul>
         {% endif %}
       </div>
     </div>
@@ -324,5 +336,37 @@
   <footer>
     <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
   </footer>
+  <script>
+    // Global image error handler: swap to placeholder when an image fails to load
+    document.addEventListener('error', function (e) {
+      var el = e.target;
+      if (el && el.tagName === 'IMG') {
+        el.onerror = null;
+        el.src = '{{ url_for('static', filename='images/navi.webp') }}';
+      }
+    }, true);
+  </script>
+  <script>
+    // Update carousel caption from the active slide's image alt text
+    (function(){
+      function updateCaption() {
+        var active = document.querySelector('#imageCarousel .carousel-item.active img');
+        var captionEl = document.getElementById('carousel-caption');
+        if (!captionEl) return;
+        if (active && active.alt) captionEl.textContent = active.alt;
+        else captionEl.textContent = '';
+      }
+
+      // Bootstrap carousel triggers
+      var carouselEl = document.getElementById('imageCarousel');
+      if (carouselEl) {
+        carouselEl.addEventListener('slid.bs.carousel', updateCaption);
+        // init caption on load
+        document.addEventListener('DOMContentLoaded', updateCaption);
+        // also run soon in case DOMContentLoaded already fired
+        setTimeout(updateCaption, 200);
+      }
+    })();
+  </script>
 </body>
 </html>

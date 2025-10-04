@@ -1,11 +1,16 @@
 import requests
 from datetime import datetime, timedelta
+import random
+import re
 
 # Base URL
 base_url = 'http://localhost:5000'
 
 # Session to maintain cookies
 session = requests.Session()
+
+# Global test user holder (populated in test_register_duplicate)
+TEST_USER = {}
 
 # Test 1: Register with short password (should fail server-side, but client blocks; here we test direct POST)
 def test_register_short_password():
@@ -38,9 +43,10 @@ def test_register_invalid_email():
 # Test 3: Register duplicate (after successful register)
 def test_register_duplicate():
     # First, register a valid user
+    suffix = str(random.randint(1000, 9999))
     data_valid = {
-        'username': 'testdup',
-        'email': 'testdup@example.com',
+        'username': f'testdup{suffix}',
+        'email': f'testdup{suffix}@example.com',
         'password': 'validpass123'
     }
     r_valid = session.post(f'{base_url}/register', data=data_valid, allow_redirects=False)
@@ -55,12 +61,17 @@ def test_register_duplicate():
             print("FAIL: Expected duplicate error")
     else:
         print("FAIL: Could not register valid user for duplicate test")
+    # Store credentials for subsequent tests (login/booking)
+    TEST_USER['username'] = data_valid['username']
+    TEST_USER['password'] = data_valid['password']
+    TEST_USER['email'] = data_valid['email']
 
 # Test 4: Login with valid user
 def test_login():
+    # Use the credentials created during registration
     data = {
-        'username': 'testdup',
-        'password': 'validpass123'
+        'username': TEST_USER.get('username', 'testdup'),
+        'password': TEST_USER.get('password', 'validpass123')
     }
     # Login endpoint redirects to index on success; don't follow redirects so we can assert 302
     r = session.post(f'{base_url}/login', data=data, allow_redirects=False)
@@ -76,12 +87,20 @@ def test_login():
 def test_booking_invalid_email(logged_in):
     if not logged_in:
         return
+    # Fetch booking page to get available bus id
+    r_page = session.get(f'{base_url}/booking/1')
+    bus_id = None
+    m = re.search(r'name="bus_id".*?<option value="(\d+)"', r_page.text, re.S)
+    if m:
+        bus_id = m.group(1)
+    future_date = (datetime.now() + timedelta(days=10)).strftime('%Y-%m-%d')
     data = {
         'name': 'Test User',
         'email': 'invalid-email',
         'phone': '1234567890',
         'travelers': '2',
-        'date': '2025-10-01'
+        'date': future_date,
+        'bus_id': bus_id or '1'
     }
     r = session.post(f'{base_url}/booking/1', data=data)
     print(f"Booking invalid email: Status {r.status_code}")
@@ -95,12 +114,17 @@ def test_booking_past_date(logged_in):
     if not logged_in:
         return
     past_date = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    # fetch bus id for this booking
+    r_page = session.get(f'{base_url}/booking/1')
+    m = re.search(r'name="bus_id".*?<option value="(\d+)"', r_page.text, re.S)
+    bus_id = m.group(1) if m else '1'
     data = {
         'name': 'Test User',
         'email': 'test@example.com',
         'phone': '1234567890',
         'travelers': '2',
-        'date': past_date
+        'date': past_date,
+        'bus_id': bus_id
     }
     r = session.post(f'{base_url}/booking/1', data=data)
     print(f"Booking past date ({past_date}): Status {r.status_code}")
@@ -113,12 +137,16 @@ def test_booking_past_date(logged_in):
 def test_booking_invalid_date(logged_in):
     if not logged_in:
         return
+    r_page = session.get(f'{base_url}/booking/1')
+    m = re.search(r'name="bus_id".*?<option value="(\d+)"', r_page.text, re.S)
+    bus_id = m.group(1) if m else '1'
     data = {
         'name': 'Test User',
         'email': 'test@example.com',
         'phone': '1234567890',
         'travelers': '2',
-        'date': 'invalid-date'
+        'date': 'invalid-date',
+        'bus_id': bus_id
     }
     r = session.post(f'{base_url}/booking/1', data=data)
     print(f"Booking invalid date: Status {r.status_code}")
@@ -132,12 +160,17 @@ def test_booking_invalid_travelers(logged_in):
     if not logged_in:
         return
     # Non-integer
+    r_page = session.get(f'{base_url}/booking/1')
+    m = re.search(r'name="bus_id".*?<option value="(\d+)"', r_page.text, re.S)
+    bus_id = m.group(1) if m else '1'
+    future_date = (datetime.now() + timedelta(days=10)).strftime('%Y-%m-%d')
     data_nonint = {
         'name': 'Test User',
         'email': 'test@example.com',
         'phone': '1234567890',
         'travelers': 'abc',
-        'date': '2025-10-01'
+        'date': future_date,
+        'bus_id': bus_id
     }
     r_nonint = session.post(f'{base_url}/booking/1', data=data_nonint)
     print(f"Booking non-int travelers: Status {r_nonint.status_code}")
@@ -150,7 +183,8 @@ def test_booking_invalid_travelers(logged_in):
         'email': 'test@example.com',
         'phone': '1234567890',
         'travelers': '0',
-        'date': '2025-10-01'
+        'date': future_date,
+        'bus_id': bus_id
     }
     r_zero = session.post(f'{base_url}/booking/1', data=data_zero)
     print(f"Booking zero travelers: Status {r_zero.status_code}")
@@ -170,9 +204,15 @@ def test_successful_booking(logged_in):
         'travelers': '2',
         'date': (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d')  # Future
     }
+    # ensure bus_id present
+    r_page = session.get(f'{base_url}/booking/1')
+    m = re.search(r'name="bus_id".*?<option value="(\d+)"', r_page.text, re.S)
+    bus_id = m.group(1) if m else '1'
+    data['bus_id'] = bus_id
     r = session.post(f'{base_url}/booking/1', data=data)
     print(f"Successful booking: Status {r.status_code}")
-    if r.status_code == 200 and 'booking_confirmation' in r.url or 'booking_confirmation.html' in r.text:
+    # check confirmation page text
+    if r.status_code == 200 and 'Booking Confirmed' in r.text:
         print("PASS: Successful booking creates entry")
     else:
         print("FAIL: Expected success for valid booking")

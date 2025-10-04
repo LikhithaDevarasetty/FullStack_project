@@ -2,9 +2,123 @@
 <html>
 <head>
   <title>Escape and Explore - Destinations</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+   
+  }
+  
+  header {
+    background-color:rgb(4, 169, 136);
+    color:black;
+    padding: 20px;
+    text-align: center;
+  }
+  .nav{
+    background-color: #44444429;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+  }
+  .nav-menu ul{
+    display: flex;
+    list-style:none;
+  }
+  .nav-menu ul a{
+    text-decoration: none;
+    color: #000;
+    text-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+    font-size: 18px;
+    margin: 0 15px;
+    transition: color .4s;
+    
+  }
+  .nav-menu ul a:hover{
+    color: bisque;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .destination{
+    top: 5px;
+    text-align: center;
+    display:grid ;
+    grid-template-columns:repeat(3,1fr);
+    padding: 30px 50px;
+    grid-column-gap: 30px;
+  }
+  .destination-image{
+    width: 90%;
+    height: 250px;
+    object-fit: cover;
+    padding-top: 30px;
+    cursor:pointer; 
+    border-radius: 30px;
+}
+.destination-image:hover{
+    transform: scale(1.04);
+}
+  .destination-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .destination-description {
+    flex: 1;
+    margin-right: 2rem;
+    color:black;
+  }
+  
+  .destination-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    
+  }
+  
+  .destination-meta {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 1rem;
+  }
+  
+  .destination-activities {
+    flex: 1;
+  }
+  
+  .activity-item {
+    margin-bottom: 1rem;
+  }
+  
+  .activity-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .activity-description {
+    font-size: 1.2rem;
+  }
+  footer {
+    background-color:rgb(4, 169, 136);
+    color: #0a0a0a;
+    padding: 3px;
+    text-align: center;
+  }
+</style>
 </head>
-<body class="non-home">
+<body>
   <header>
     <h1>Escape and Explore - Destinations</h1>
   </header>
@@ -29,10 +143,15 @@
     <div class="destination">
       {% for package in packages %}
       <div class="destination-item">
-        <img src="{{ url_for('static', filename='images/' + package.image) }}" alt="{{ package.name }}" class="destination-image">
+        <a href="{{ url_for('destination_detail', package_id=package.id) }}">
+          <img src="{{ url_for('static', filename='images/' ~ package.image) }}" alt="{{ package.name }}" class="destination-image">
+        </a>
         <h2 class="destination-title">{{ package.name }}</h2>
-        <p class="destination-description">{{ package.description.split('\n')[0] }}</p>
-        <a href="{{ url_for('destination_detail', package_id=package.id) }}" class="cta-button">Learn More</a>
+        <p class="destination-meta">{{ package.location or '' }} &middot; {{ package.duration or '' }}</p>
+        <p class="destination-description">{{ package.description[:200] }}{% if package.description|length > 200 %}...{% endif %}</p>
+        <div class="destination-actions">
+          <a href="{{ url_for('destination_detail', package_id=package.id) }}" class="cta-button">Learn More</a>
+        </div>
       </div>
       {% endfor %}
     </div>
@@ -40,5 +159,15 @@
   <footer>
     <p>&copy; 2023 Escape And Explore. All rights reserved.</p>
   </footer>
+  <script>
+    // Global image error handler: swap to placeholder when an image fails to load
+    document.addEventListener('error', function (e) {
+      var el = e.target;
+      if (el && el.tagName === 'IMG') {
+        el.onerror = null;
+        el.src = '{{ url_for('static', filename='images/navi.webp') }}';
+      }
+    }, true);
+  </script>
 </body>
 </html>

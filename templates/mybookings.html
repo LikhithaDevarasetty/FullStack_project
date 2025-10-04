@@ -27,6 +27,7 @@
   </div>
 
   <div class="container">
+    {% include '_flashes.html' %}
     {% if bookings %}
       <div class="bookings-grid">
         {% for booking in bookings %}
