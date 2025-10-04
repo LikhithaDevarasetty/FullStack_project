@@ -26,12 +26,19 @@
             <h2>Booking Confirmed!</h2>
           </div>
           <div class="card-body">
-            <h4>Thank you for your booking, {{ booking.name }}!</h4>
-            <p><strong>Package:</strong> {{ package.name }}</p>
-            <p><strong>Email:</strong> {{ booking.email }}</p>
-            <p><strong>Phone:</strong> {{ booking.phone }}</p>
-            <p><strong>Number of Travelers:</strong> {{ booking.travelers }}</p>
-            <p><strong>Travel Date:</strong> {{ booking.date }}</p>
+            <h4>Thank you for your booking, {{ booking.name or 'Guest' }}!</h4>
+            <p><strong>Package:</strong> {{ package.name if package else 'N/A' }}</p>
+            <p><strong>Bus:</strong>
+              {% if bus %}
+                {{ bus.name }} ({{ bus.departure_time }}) - ${{ bus.price }}
+              {% else %}
+                N/A
+              {% endif %}
+            </p>
+            <p><strong>Email:</strong> {{ booking.email or 'N/A' }}</p>
+            <p><strong>Phone:</strong> {{ booking.phone or 'N/A' }}</p>
+            <p><strong>Number of Travelers:</strong> {{ booking.travelers or 'N/A' }}</p>
+            <p><strong>Travel Date:</strong> {{ booking.date or 'N/A' }}</p>
             <p>Your booking has been successfully created. You can view or manage it in My Bookings.</p>
             <div class="text-center">
               <a href="{{ url_for('mybookings') }}" class="btn btn-primary me-2">View My Bookings</a>

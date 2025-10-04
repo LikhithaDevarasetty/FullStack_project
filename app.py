@@ -40,17 +40,28 @@ class Package(db.Model):
     best_time = db.Column(db.String(50))
     activities = db.Column(db.Text)
     bookings = db.relationship('Booking', backref='package', lazy=True)
+    buses = db.relationship('Bus', backref='package', lazy=True)
+
+class Bus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    departure_time = db.Column(db.String(50), nullable=False)
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
+    bus_id = db.Column(db.Integer, db.ForeignKey('bus.id'), nullable=False)
     name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     travelers = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String(50), nullable=False)
     user = db.relationship('User', backref='bookings', lazy=True)
+    bus = db.relationship('Bus', backref='bookings', lazy=True)
 
 @app.route('/')
 def index():
@@ -128,44 +139,59 @@ def booking(package_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
     package = Package.query.get_or_404(package_id)
+    buses = package.buses
     if request.method == 'POST':
-        name = request.form['name'].strip()
-        email = request.form['email'].strip()
-        phone = request.form['phone'].strip()
-        travelers = request.form['travelers']
-        date = request.form['date']
+        # Use .get to avoid KeyError when a field is missing from the POST body (prevents 500 errors)
+        name = (request.form.get('name') or '').strip()
+        email = (request.form.get('email') or '').strip()
+        phone = (request.form.get('phone') or '').strip()
+        travelers = request.form.get('travelers') or ''
+        date = request.form.get('date') or ''
+        bus_id = request.form.get('bus_id') or ''
 
-        if not name or not email or not phone or not travelers or not date:
+        # Validate presence of required fields and show a friendly flash instead of raising an exception
+        if not all([name, email, phone, travelers, date, bus_id]):
             flash('All fields are required.')
-            return render_template('booking.html', package=package)
+            return render_template('booking.html', package=package, buses=buses)
 
         import re
         if not re.match(r'^[^\s@]+@[^\s@]+\.[^\s@]+$', email):
             flash('Invalid email format.')
-            return render_template('booking.html', package=package)
+            return render_template('booking.html', package=package, buses=buses)
 
         try:
             from datetime import datetime
             booking_date = datetime.strptime(date, '%Y-%m-%d')
             if booking_date <= datetime.now():
                 flash('Travel date must be in the future.')
-                return render_template('booking.html', package=package)
+                return render_template('booking.html', package=package, buses=buses)
         except ValueError:
             flash('Invalid date format. Please use YYYY-MM-DD.')
-            return render_template('booking.html', package=package)
+            return render_template('booking.html', package=package, buses=buses)
 
         try:
             travelers = int(travelers)
             if travelers < 1:
                 flash('Number of travelers must be at least 1.')
-                return render_template('booking.html', package=package)
+                return render_template('booking.html', package=package, buses=buses)
         except ValueError:
             flash('Number of travelers must be a valid number.')
-            return render_template('booking.html', package=package)
+            return render_template('booking.html', package=package, buses=buses)
+
+        try:
+            bus_id = int(bus_id)
+            bus = Bus.query.get(bus_id)
+            if not bus or bus.package_id != package_id:
+                flash('Invalid bus selection.')
+                return render_template('booking.html', package=package, buses=buses)
+        except ValueError:
+            flash('Invalid bus selection.')
+            return render_template('booking.html', package=package, buses=buses)
 
         booking = Booking(
             user_id=session['user_id'],
             package_id=package_id,
+            bus_id=bus_id,
             name=name,
             email=email,
             phone=phone,
@@ -174,14 +200,14 @@ def booking(package_id):
         )
         db.session.add(booking)
         db.session.commit()
-        return render_template('booking_confirmation.html', booking=booking, package=package)
-    return render_template('booking.html', package=package)
+        return render_template('booking_confirmation.html', booking=booking, package=package, bus=bus)
+    return render_template('booking.html', package=package, buses=buses)
 
 @app.route('/mybookings')
 def mybookings():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    bookings = Booking.query.filter_by(user_id=session['user_id']).options(joinedload(Booking.package)).all()
+    bookings = Booking.query.filter_by(user_id=session['user_id']).options(joinedload(Booking.package), joinedload(Booking.bus)).all()
     return render_template('mybookings.html', bookings=bookings)
 
 @app.route('/cancel_booking/<int:booking_id>')
@@ -204,7 +230,7 @@ def cancel_booking(booking_id):
 def admin():
     if 'is_admin' not in session or not session['is_admin']:
         return redirect(url_for('login'))
-    bookings = Booking.query.options(joinedload(Booking.package), joinedload(Booking.user)).all()
+    bookings = Booking.query.options(joinedload(Booking.package), joinedload(Booking.user), joinedload(Booking.bus)).all()
     return render_template('admin.html', bookings=bookings)
 
 @app.route('/logout')
@@ -235,5 +261,19 @@ if __name__ == '__main__':
             if not Package.query.filter_by(name=p['name']).first():
                 package = Package(**p)
                 db.session.add(package)
+        db.session.commit()
+
+        # Seed sample buses for each package
+        packages = Package.query.all()
+        for package in packages:
+            if not Bus.query.filter_by(package_id=package.id).first():
+                buses_data = [
+                    {'name': f'{package.name} Express 1', 'capacity': 50, 'price': 1000.0, 'departure_time': '08:00 AM'},
+                    {'name': f'{package.name} Deluxe 2', 'capacity': 40, 'price': 1200.0, 'departure_time': '10:00 AM'},
+                    {'name': f'{package.name} Premium 3', 'capacity': 30, 'price': 1500.0, 'departure_time': '02:00 PM'}
+                ]
+                for b in buses_data:
+                    bus = Bus(package_id=package.id, **b)
+                    db.session.add(bus)
         db.session.commit()
     app.run(debug=True)

@@ -26,6 +26,7 @@
           <th>ID</th>
           <th>User</th>
           <th>Package</th>
+          <th>Bus</th>
           <th>Name</th>
           <th>Email</th>
           <th>Phone</th>
@@ -37,13 +38,20 @@
         {% for booking in bookings %}
         <tr>
           <td>{{ booking.id }}</td>
-          <td>{{ booking.user_id }}</td>
-          <td>{{ booking.package_id }}</td>
-          <td>{{ booking.name }}</td>
-          <td>{{ booking.email }}</td>
-          <td>{{ booking.phone }}</td>
-          <td>{{ booking.travelers }}</td>
-          <td>{{ booking.date }}</td>
+          <td>{{ booking.user.username if booking.user else 'Unknown' }}</td>
+          <td>{{ booking.package.name if booking.package else 'N/A' }}</td>
+          <td>
+            {% if booking.bus %}
+              {{ booking.bus.name }} ({{ booking.bus.departure_time }})
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+          <td>{{ booking.name or 'N/A' }}</td>
+          <td>{{ booking.email or 'N/A' }}</td>
+          <td>{{ booking.phone or 'N/A' }}</td>
+          <td>{{ booking.travelers or 'N/A' }}</td>
+          <td>{{ booking.date or 'N/A' }}</td>
         </tr>
         {% endfor %}
       </tbody>

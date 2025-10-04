@@ -32,12 +32,19 @@
         {% for booking in bookings %}
         <div class="card booking-card">
           <div class="card-body">
-            <h5 class="card-title">{{ booking.package.name }}</h5>
-            <p class="card-text"><strong>Name:</strong> {{ booking.name }}</p>
-            <p class="card-text"><strong>Email:</strong> {{ booking.email }}</p>
-            <p class="card-text"><strong>Phone:</strong> {{ booking.phone }}</p>
-            <p class="card-text"><strong>Travelers:</strong> {{ booking.travelers }}</p>
-            <p class="card-text"><strong>Date:</strong> {{ booking.date }}</p>
+            <h5 class="card-title">{{ booking.package.name if booking.package else 'N/A' }}</h5>
+            <p class="card-text"><strong>Bus:</strong>
+              {% if booking.bus %}
+                {{ booking.bus.name }} ({{ booking.bus.departure_time }}) - ${{ booking.bus.price }}
+              {% else %}
+                N/A
+              {% endif %}
+            </p>
+            <p class="card-text"><strong>Name:</strong> {{ booking.name or 'N/A' }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ booking.email or 'N/A' }}</p>
+            <p class="card-text"><strong>Phone:</strong> {{ booking.phone or 'N/A' }}</p>
+            <p class="card-text"><strong>Travelers:</strong> {{ booking.travelers or 'N/A' }}</p>
+            <p class="card-text"><strong>Date:</strong> {{ booking.date or 'N/A' }}</p>
             <a href="{{ url_for('cancel_booking', booking_id=booking.id) }}" class="btn btn-danger">Cancel Booking</a>
           </div>
         </div>

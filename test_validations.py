@@ -43,8 +43,9 @@ def test_register_duplicate():
         'email': 'testdup@example.com',
         'password': 'validpass123'
     }
-    r_valid = session.post(f'{base_url}/register', data=data_valid)
-    if r_valid.status_code == 302:  # Success redirect
+    r_valid = session.post(f'{base_url}/register', data=data_valid, allow_redirects=False)
+    # Registration endpoint redirects to /login on success (302)
+    if r_valid.status_code == 302:
         # Now try duplicate
         r_dup = session.post(f'{base_url}/register', data=data_valid)
         print(f"Register duplicate: Status {r_dup.status_code}")
@@ -61,9 +62,10 @@ def test_login():
         'username': 'testdup',
         'password': 'validpass123'
     }
-    r = session.post(f'{base_url}/login', data=data)
+    # Login endpoint redirects to index on success; don't follow redirects so we can assert 302
+    r = session.post(f'{base_url}/login', data=data, allow_redirects=False)
     print(f"Login: Status {r.status_code}")
-    if r.status_code == 302 and r.url == f'{base_url}/':
+    if r.status_code == 302 and r.headers.get('Location') in ('/', ''):
         print("PASS: Login successful")
         return True
     else:

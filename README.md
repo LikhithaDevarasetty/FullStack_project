@@ -2,7 +2,6 @@
 
 ## Project Description
 
-This is a web application built with Flask that allows users to browse and book travel packages to various destinations in India. Features include user registration and login, package details with images and descriptions, booking system with validation, user dashboard for managing bookings, and an admin panel for overseeing all bookings.
 
 ## Technologies Used
 
@@ -20,6 +19,7 @@ This is a web application built with Flask that allows users to browse and book 
   
 5. Run the application:
    
+
 6. Open your web browser and go to `http://localhost:5000` to access the website.
 
 The application will create the database and seed sample packages on first run.
