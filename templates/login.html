@@ -17,6 +17,7 @@
         <li><a href="{{ url_for('login') }}">Login</a></li>
         <li><a href="{{ url_for('register') }}">Register</a></li>
         {% else %}
+        <!--this is login page -->
         <li><a href="{{ url_for('mybookings') }}">My Bookings</a></li>
         <li><a href="{{ url_for('logout') }}">Logout</a></li>
         {% endif %}
