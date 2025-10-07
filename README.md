@@ -1,33 +1,25 @@
-# 🚀 Project Title
+# Travel Website
 
-## 📘 Project Description
-This project is designed to [briefly describe what your project does — e.g., "an interactive web application that helps users track their daily habits and visualize progress over time"].  
-It focuses on [state your goals — e.g., "simplicity, performance, and user experience"].  
+## Project Description
 
-Key Features:
-- ✅ Feature 1 – [e.g., Real-time data updates]
-- ✅ Feature 2 – [e.g., Responsive and mobile-friendly UI]
-- ✅ Feature 3 – [e.g., Integration with external APIs]
+This is a web application built with Flask that allows users to browse and book travel packages to various destinations in India and abroad. Features include user registration and login, package details with images and descriptions, booking system with validation, user dashboard for managing bookings, and an admin panel for overseeing all bookings.
 
----
+## Technologies Used
 
-## 🧰 Technologies Used
-This project was built using the following technologies:
+- **Backend**: Python, Flask
+- **Database**: SQLite with SQLAlchemy ORM
+- **Frontend**: HTML, CSS, JavaScript
+- **Security**: Werkzeug for password hashing
 
-| Category | Technology |
-|-----------|-------------|
-| Frontend | HTML, CSS, JavaScript, React |
-| Backend | Node.js, Express |
-| Database | MongoDB |
-| Version Control | Git & GitHub |
-| Tools & Others | VS Code, Postman, npm |
+## Setup Instructions
 
----
+1. Ensure you have Python installed (version 3.6 or higher).
+2. Clone or download the project files.
+3. Navigate to the project directory.
+4. Install the required dependencies:
+  
+5. Run the application:
+   
+6. Open your web browser and go to `http://localhost:5000` to access the website.
 
-## ⚙️ Setup Instructions
-
-Follow these steps to run the project locally:
-
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/your-username/your-repo-name.git
+The application will create the database and seed sample packages on first run.
