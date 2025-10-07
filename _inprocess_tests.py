@@ -7,7 +7,7 @@ with app.app_context():
     # fresh DB for tests
     db.drop_all()
     db.create_all()
-    # seed a package and a bus
+    
     pkg = Package(name='TESTPKG', description='desc', image='img.jpg')
     db.session.add(pkg)
     db.session.commit()

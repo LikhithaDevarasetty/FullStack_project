@@ -4,3 +4,4 @@ resp = s.post('http://127.0.0.1:5000/register', data={'username':'debuguser','em
 print('Status:', resp.status_code)
 print('Location header:', resp.headers.get('Location'))
 print('Body snippet:\n', resp.text[:1200])
+                   

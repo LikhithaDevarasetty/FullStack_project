@@ -14,6 +14,6 @@ else:
     print('Server did not start in time')
     raise SystemExit(1)
 
-# Run tests
+
 import subprocess
 subprocess.run(['python', 'test_validations.py'])
